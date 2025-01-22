@@ -35,20 +35,24 @@ def get_states(country_iso2: str = Query(None), page: int = Query(1, ge=1), page
         "states": states
     }
 
-@router.get("/states/details/{state_code}")
-def get_state_details(state_code: str):
+@router.get("/states/details/{country_iso2}/{state_iso2}")
+def get_state_details(country_iso2: str, state_iso2: str):
     """
-    Get details of a specific state.
+    Get details of a specific state by its country and state code.
     
     Args:
-        state_code (str): The state code.
+        country_iso2 (str): The ISO2 code of the country.
+        state_iso2 (str): The ISO2 code of the state.
         
     Returns (dict): A dictionary containing the state details.
     """
     conn = connect_db(DB_PATH)
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM states WHERE id = ?", (state_code,))
+    cursor.execute(
+        "SELECT * FROM states WHERE country_code = ? AND iso2 = ?",
+        (country_iso2, state_iso2)
+    )
     state = cursor.fetchone()
 
     conn.close()
