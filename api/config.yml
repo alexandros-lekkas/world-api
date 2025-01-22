@@ -1,4 +1,0 @@
-allowed_hosts: []
-
-rate_limit:
-  limit: "10/hour"
