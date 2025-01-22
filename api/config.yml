@@ -1,1 +1,4 @@
-allowed_hosts: [] # e.g. ["http://localhost:3000"]
+allowed_hosts: []
+
+rate_limit:
+  limit: "10/hour"
