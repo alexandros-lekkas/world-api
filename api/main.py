@@ -11,10 +11,10 @@ def connect_db(DB_PATH):
     return conn
 
 @app.get("/countries")
-def get_countries():
+def get_countries(skip: int = 0, limit: int = 10):
     conn = connect_db(COUNTRIES_DB_PATH)
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM countries")
+    cursor.execute("SELECT * FROM countries LIMIT ? OFFSET ?", (limit, skip))
     countries = [dict(row) for row in cursor.fetchall()]
     conn.close()
-    return { "countries": countries }
+    return {"countries": countries}
