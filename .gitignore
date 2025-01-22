@@ -1,1 +1,6 @@
+# Python
+.venv
+.mypy_cache
+
+# Code editors
 .vscode
