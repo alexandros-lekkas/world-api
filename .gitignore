@@ -1,6 +1,7 @@
 # Python
 .venv
 .mypy_cache
+__pycache__
 
 # Code editors
 .vscode
