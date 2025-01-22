@@ -1,0 +1,4 @@
+allowed_hosts: []
+
+rate_limit:
+  limit: "100/hour"
