@@ -49,7 +49,7 @@ def get_states_by_country(country_iso2: str):
     conn = connect_db(DB_PATH)
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM states WHERE country_iso2 = ?", (country_iso2,))
+    cursor.execute("SELECT * FROM states WHERE country_code = ?", (country_iso2,))
     states = [dict(row) for row in cursor.fetchall()]
 
     conn.close()
