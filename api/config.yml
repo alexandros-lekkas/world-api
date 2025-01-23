@@ -1,5 +1,5 @@
 allowed_hosts: []
-allowed_origins: ["*"]
+allowed_origins: []
 
 rate_limit:
   limit: "100/hour"
