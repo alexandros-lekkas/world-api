@@ -1,4 +1,5 @@
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 from slowapi.middleware import SlowAPIMiddleware
 import yaml
 
@@ -15,11 +16,16 @@ with open("api/config.yml", "r") as config_file:
 allowed_hosts = config.get("allowed_hosts", ["*"])
 if len(allowed_hosts) == 0:
     allowed_hosts = ["*"]
+    
+allowed_origins = config.get("allowed_origins", ["*"])
+if len(allowed_origins) == 0:
+    allowed_origins = ["*"]
 
 rate_limit = config.get("rate_limit", {}).get("limit", "100/hour")
 
 # Initialize app
 app = FastAPI()
+app.add_middleware(CORSMiddleware, allow_origins=allowed_origins)
 
 # Initialize rate limiter
 limiter = init_rate_limiter(rate_limit)

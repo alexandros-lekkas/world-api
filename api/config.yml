@@ -1,4 +1,5 @@
-allowed_hosts: ["http://localhost:3000/", "https://admin.haulbuy.com", "https://www.haulbuy.com"]
+allowed_hosts: []
+allowed_origins: []
 
 rate_limit:
   limit: "100/hour"
