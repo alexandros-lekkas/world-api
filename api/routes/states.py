@@ -16,6 +16,9 @@ def get_states(country_iso2: str = Query(None), page: int = Query(1, ge=1), page
 
     conn = connect_db(DB_PATH)
     cursor = conn.cursor()
+    
+    cursor.execute("SELECT COUNT(*) FROM states")
+    total_count = cursor.fetchone()[0]
 
     if country_iso2:
         cursor.execute("SELECT * FROM states WHERE country_code = ? LIMIT ? OFFSET ?", (country_iso2, pageSize, offset))
@@ -31,7 +34,8 @@ def get_states(country_iso2: str = Query(None), page: int = Query(1, ge=1), page
     return {
         "page": page,
         "pageSize": pageSize,
-        "totalCount": len(states),
+        "count": len(states),
+        "total_count": total_count,
         "states": states
     }
 

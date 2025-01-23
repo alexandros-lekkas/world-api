@@ -23,6 +23,9 @@ def get_countries(page: int = Query(1, ge=1),
     conn = connect_db(DB_PATH)
     cursor = conn.cursor()
     
+    cursor.execute("SELECT COUNT(*) FROM countries")
+    total_count = cursor.fetchone()[0]
+    
     cursor.execute("SELECT * FROM countries LIMIT ? OFFSET ?", (pageSize, offset))
     countries = [dict(row) for row in cursor.fetchall()]
     
@@ -30,8 +33,9 @@ def get_countries(page: int = Query(1, ge=1),
     
     return {
         "page": page,
-        "pageSize": pageSize,
-        "totalCount": len(countries),
+        "page_size": pageSize,
+        "count": len(countries),
+        "total_count": total_count,
         "countries": countries
     }
     

@@ -15,6 +15,9 @@ def get_cities(country_iso2: str = Query(None), state_iso2: str = Query(None), p
 
     conn = connect_db(DB_PATH)
     cursor = conn.cursor()
+    
+    cursor.execute("SELECT COUNT(*) FROM cities")
+    total_count = cursor.fetchone()[0]
 
     if country_iso2 and state_iso2:
         cursor.execute("SELECT * FROM cities WHERE country_code = ? AND state_code = ? LIMIT ? OFFSET ?", (country_iso2, state_iso2, pageSize, offset))
@@ -32,6 +35,7 @@ def get_cities(country_iso2: str = Query(None), state_iso2: str = Query(None), p
     return {
         "page": page,
         "pageSize": pageSize,
-        "totalCount": len(cities),
+        "count": len(cities),
+        "total_count": total_count,
         "cities": cities
     }
